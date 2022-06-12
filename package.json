@@ -38,6 +38,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@types/react-redux": "^7.1.24",
     "antd": "^4.21.0",
+    "normalizr": "^3.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^8.0.2"

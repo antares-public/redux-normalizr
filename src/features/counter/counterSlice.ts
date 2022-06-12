@@ -1,8 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../..';
+import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "@/index";
+import { normalize, schema } from "normalizr";
 
-export const slice = createSlice({
-  name: 'counter',
+const counterSlice = createSlice({
+  name: "counter",
   initialState: {
     value: 0,
   },
@@ -19,8 +20,8 @@ export const slice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = slice.actions;
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 export const selectCount = (state: RootState) => state.counter.value;
 
-export default slice.reducer;
+export default counterSlice.reducer

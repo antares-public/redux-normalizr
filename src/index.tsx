@@ -4,9 +4,9 @@ import "antd/dist/antd.css";
 import "./styles/styles.css";
 import store from "./app/store";
 import { Provider } from "react-redux";
-import { Counter } from "./features/counter/Counter";
+import { Users } from "./features/users/Users";
 
-const App: React.FC = () => <Counter />;
+const App: React.FC = () => <Users />;
 
 render(
   <Provider store={store}>
