@@ -1,25 +1,38 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/index";
-import { normalize, schema } from "normalizr";
+import { normalize } from "normalizr";
+import { userSchema } from "./usersEntity";
+import { isError } from "../../utils/isError";
+
+const data = [
+  { id: "123", name: "Jim" },
+  { id: "456", name: "Jane" },
+];
+
+export const fetchUsers = createAsyncThunk(
+  "users/fetchUsers",
+  async (arg: any, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const normalized = normalize(data, [userSchema]);
+      return fulfillWithValue(normalized.entities.users);
+    } catch (e) {
+      isError(e);
+      return rejectWithValue(e.message);
+    }
+  }
+);
 
 const usersSlice = createSlice({
   name: "users",
   initialState: { users: [] as any },
-  reducers: {
-    fetch: (state) => {
-      const data = { users: [{ id: 1 }, { id: 2 }] };
-      const user = new schema.Entity("users");
-      const customSchema = { users: [user] };
-
-      const normalized = normalize(data, customSchema);
-      console.log( normalized.entities);
-      state.users = []
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchUsers.fulfilled, (state, { payload }) => {
+      state.users = payload
+    });
   },
 });
 
-export const { fetch } = usersSlice.actions;
-
 export const selectUsers = (state: RootState) => state.users.users;
 
-export default usersSlice.reducer
+export default usersSlice.reducer;

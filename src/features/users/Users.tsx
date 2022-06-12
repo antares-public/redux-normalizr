@@ -2,7 +2,7 @@ import { Button, Input } from "antd";
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUsers } from "./usersSlice";
-import { fetch } from "./usersSlice";
+import { fetchUsers } from "./usersSlice";
 
 export function Users() {
   const users = useSelector(selectUsers);
@@ -26,8 +26,11 @@ export function Users() {
         }}
       >
         <div style={{ marginTop: 30, display: "grid" }}>
-          {users}
-          <Button onClick={() => dispatch(fetch())}>fetch users</Button>
+          {Object.values(users).map(({ name, id }: any) => (
+            <p key={id}>{name}</p>
+          ))}
+          {/* @ts-ignore */}
+          <Button onClick={() => dispatch(fetchUsers())}>fetch users</Button>
         </div>
       </div>
     </div>
